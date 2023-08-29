@@ -1,6 +1,7 @@
 package com.game.football.controller;
 
 import com.game.football.entity.Team;
+import com.game.football.entity.dto.TeamWinnings;
 import com.game.football.service.TeamService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -27,6 +28,12 @@ public class TeamController {
     @GetMapping("/league/{id}")
     public ResponseEntity<List<Team>> findByLeagueId(@PathVariable Long id) {
         List<Team> result = teamService.findByLeagueId(id);
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    @GetMapping("ranking/league/{id}")
+    public ResponseEntity<List<TeamWinnings>> findRankingByLeagueId(@PathVariable Long id) {
+        List<TeamWinnings> result = teamService.findRankingByLeagueId(id);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 

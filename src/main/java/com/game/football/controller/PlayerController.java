@@ -37,4 +37,8 @@ public class PlayerController {
         Player result = playerService.findById(id);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
+//    @GetMapping("details/{id}")
+//    public ResponseEntity<?> playerDetails(@PathVariable Long id){
+//        // id , name , team , league , number of goals , team winnings
+//    }
 }
