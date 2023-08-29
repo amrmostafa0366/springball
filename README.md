@@ -1,3 +1,5 @@
+DB Is Attached In Proj. Files (football_game.sql)
+
 http://localhost:8080/matches/play/{leagueId}                  ->play a random match in a league
 
 http://localhost:8080/teams/ranking/league/{leagueId}          ->display all teams ranks in a league
