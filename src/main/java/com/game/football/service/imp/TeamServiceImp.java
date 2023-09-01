@@ -32,6 +32,14 @@ public class TeamServiceImp extends BaseServiceImp<Team, Long> implements TeamSe
     }
 
     @Override
+    public void addToLeague(Long teamId, Long leagueId) {
+        Team team = findById(teamId);
+        League league = leagueService.findById(leagueId);
+        team.setLeague(league);
+        save(team);
+    }
+
+    @Override
     public List<Team> findByLeagueId(Long id) {
         League league = leagueService.findById(id);
         return teamRepo.findByLeague(league);

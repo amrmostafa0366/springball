@@ -34,4 +34,13 @@ public class RefereeServiceImp extends BaseServiceImp<Referee, Long> implements 
         League league = leagueService.findById(id);
         return refereeRepo.findByLeague(league);
     }
+
+    @Override
+    public void addToLeague(Long refereeId, Long leagueId) {
+        Referee referee = findById(refereeId);
+        League league = leagueService.findById(leagueId);
+        referee.setLeague(league);
+        save(referee);
+    }
+
 }

@@ -13,4 +13,5 @@ public interface PlayerService extends BaseService<Player, Long> {
 
     void update(Long id, Player player);
 
+    void addToTeam(Long playerId, Long teamId);
 }

@@ -51,4 +51,24 @@ public class CoachController {
         coachService.deleteById(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+    @PostMapping("/add-to-team/{coachId}/{teamId}")
+    public ResponseEntity<Boolean> addToTeam(@PathVariable Long coachId, @PathVariable Long teamId) {
+        boolean result = coachService.addToTeam(coachId, teamId);
+        if (result) {
+            return new ResponseEntity<>(HttpStatus.CREATED);
+        } else {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @PostMapping("/add-to-league/{coachId}/{leagueId}")
+    public ResponseEntity<Boolean> addToLeague(@PathVariable Long coachId, @PathVariable Long leagueId) {
+        boolean result = coachService.addToLeague(coachId, leagueId);
+        if (result) {
+            return new ResponseEntity<>(HttpStatus.CREATED);
+        } else {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
 }

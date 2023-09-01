@@ -2,6 +2,7 @@ package com.game.football.controller;
 
 import com.game.football.entity.Player;
 
+import com.game.football.entity.Team;
 import com.game.football.service.PlayerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -28,6 +29,11 @@ public class PlayerController {
         return new ResponseEntity<>(result, HttpStatus.OK);
 
     }
+    @PostMapping("")
+    public ResponseEntity<Void> save(@RequestBody Player player) {
+        playerService.save(player);
+        return new ResponseEntity<>(HttpStatus.CREATED);
+    }
 
     @GetMapping("/{id}")
     public ResponseEntity<Player> findById(@PathVariable Long id) {
@@ -45,6 +51,12 @@ public class PlayerController {
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         playerService.deleteById(id);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PostMapping("/{playerId}/{teamId}")
+    public ResponseEntity<Boolean> addToTeam(@PathVariable Long playerId,@PathVariable Long teamId){
+        playerService.addToTeam(playerId,teamId);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
 }

@@ -44,4 +44,10 @@ public class LeagueManagerController {
         leagueManagerService.deleteById(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+    @PostMapping("/{leagueManagerId}/{leagueId}")
+    public ResponseEntity<Void> addToLeague(@PathVariable Long leagueManagerId,@PathVariable Long leagueId){
+        leagueManagerService.addToLeague(leagueManagerId,leagueId);
+        return new ResponseEntity<>(HttpStatus.CREATED);
+    }
 }

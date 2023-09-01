@@ -51,4 +51,10 @@ public class RefereeController {
         refereeService.deleteById(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+    @PostMapping("/{refereeId}/{leagueId}")
+    public ResponseEntity<Void> addToLeague(@PathVariable Long refereeId,@PathVariable Long leagueId){
+        refereeService.addToLeague(refereeId,leagueId);
+        return new ResponseEntity<>(HttpStatus.CREATED);
+    }
 }

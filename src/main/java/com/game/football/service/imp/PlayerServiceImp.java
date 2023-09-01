@@ -1,5 +1,6 @@
 package com.game.football.service.imp;
 
+import com.game.football.entity.League;
 import com.game.football.entity.Player;
 import com.game.football.entity.Team;
 import com.game.football.error.NoTAcceptableException;
@@ -33,5 +34,13 @@ public class PlayerServiceImp extends BaseServiceImp<Player, Long> implements Pl
         } else {
             throw new NoTAcceptableException("Invalid Input");
         }
+    }
+
+    @Override
+    public void addToTeam(Long playerId, Long teamId) {
+        Player player = findById(playerId);
+        Team team = teamService.findById(teamId);
+        player.setTeam(team);
+        save(player);
     }
 }
