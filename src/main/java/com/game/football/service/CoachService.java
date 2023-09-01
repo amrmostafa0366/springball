@@ -8,5 +8,7 @@ import java.util.List;
 
 @Service
 public interface CoachService extends BaseService<Coach, Long> {
+    void update(Long id, Coach coach);
+
     List<Coach> findByLeagueId(Long id);
 }

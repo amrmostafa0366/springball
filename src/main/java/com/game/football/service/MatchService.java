@@ -11,4 +11,5 @@ public interface MatchService extends BaseService<Match, Long> {
 
     List<Match> findByTeamId(Long id);
     Match play(Long leagueId);
+    boolean playerKick(Long matchId, Long playerId);
 }

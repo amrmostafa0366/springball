@@ -7,5 +7,7 @@ import java.util.List;
 
 @Service
 public interface RefereeService extends BaseService<Referee, Long> {
+    void update(Long id, Referee referee);
+
     List<Referee> findByLeagueId(Long id);
 }

@@ -10,4 +10,7 @@ public interface PlayerService extends BaseService<Player, Long> {
 
 
     List<Player> findByTeamId(Long id);
+
+    void update(Long id, Player player);
+
 }

@@ -9,4 +9,5 @@ import java.util.List;
 @Repository
 public interface PlayerRepo extends BaseRepo<Player, Long> {
     List<Player> findByTeam(Team team);
+
 }

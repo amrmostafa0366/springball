@@ -1,15 +1,13 @@
 package com.game.football.controller;
 
+import com.game.football.entity.League;
 import com.game.football.entity.Team;
 import com.game.football.entity.dto.TeamWinnings;
 import com.game.football.service.TeamService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -31,7 +29,7 @@ public class TeamController {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
-    @GetMapping("ranking/league/{id}")
+    @GetMapping("ranking/{id}")
     public ResponseEntity<List<TeamWinnings>> findRankingByLeagueId(@PathVariable Long id) {
         List<TeamWinnings> result = teamService.findRankingByLeagueId(id);
         return new ResponseEntity<>(result, HttpStatus.OK);
@@ -41,5 +39,23 @@ public class TeamController {
     public ResponseEntity<Team> findById(@PathVariable Long id) {
         Team result = teamService.findById(id);
         return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    @PostMapping("")
+    public ResponseEntity<Void> save(@RequestBody Team team) {
+        teamService.save(team);
+        return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Void> update(@PathVariable Long id, @RequestBody Team team) {
+        teamService.update(id, team);
+        return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        teamService.deleteById(id);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

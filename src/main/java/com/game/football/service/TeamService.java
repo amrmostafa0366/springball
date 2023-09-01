@@ -11,4 +11,6 @@ public interface TeamService extends BaseService<Team, Long> {
     List<Team> findByLeagueId(Long id);
 
     List<TeamWinnings> findRankingByLeagueId(Long id);
+
+    void update(Long id, Team team);
 }

@@ -4,13 +4,17 @@ import com.game.football.entity.Goal;
 import com.game.football.entity.Match;
 import com.game.football.entity.Player;
 import com.game.football.entity.Team;
+import com.game.football.error.NotFoundException;
 import com.game.football.repository.MatchRepo;
+import com.game.football.service.GoalService;
 import com.game.football.service.MatchService;
 import com.game.football.service.PlayerService;
 import com.game.football.service.TeamService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -23,6 +27,8 @@ public class MatchServiceImp extends BaseServiceImp<Match, Long> implements Matc
     private TeamService teamService;
     @Autowired
     private PlayerService playerService;
+    @Autowired
+    private GoalService goalService;
 
     @Override
     public List<Match> findByTeamId(Long id) {
@@ -69,11 +75,49 @@ public class MatchServiceImp extends BaseServiceImp<Match, Long> implements Matc
         return null;
     }
 
+    @Override
+    public boolean playerKick(Long matchId, Long playerId) {
+        Match match = findById(matchId);
+        Player player = playerService.findById(playerId);
+        boolean isGoal = kick();
+
+        LocalDateTime currentTime = LocalDateTime.now();
+        LocalDateTime matchStartTime = match.getDateTime();
+        Duration elapsedDuration = Duration.between(matchStartTime, currentTime);
+        long elapsedMinutes = elapsedDuration.toMinutes();
+
+        System.out.println("Elapsed Minutes: " + elapsedMinutes);
+        if (elapsedMinutes > 90) {
+            return false;
+        }
+
+        if (match.getTeam1() == player.getTeam()) {
+            if (isGoal) {
+                match.setScore1(match.getScore1() + 1);
+                Goal goal = new Goal(match, player, elapsedMinutes);
+                goalService.save(goal);
+            }
+        } else if (match.getTeam2() == player.getTeam()) {
+            if (isGoal) {
+                match.setScore2(match.getScore2() + 1);
+                Goal goal = new Goal(match, player, elapsedMinutes);
+                goalService.save(goal);
+            }
+        } else {
+            throw new NotFoundException("Player is not a member of either team");
+        }
+        return isGoal;
+    }
+
+    private boolean kick() {
+        return new Random().nextBoolean();
+    }
+
     private List<Goal> getGoalsPlayers(Match match, List<Player> players, int goals) {
         Random random = new Random();
         List<Goal> list = new ArrayList<>();
         for (int i = 0; i < goals; i++) {
-            Goal goal = new Goal(match, players.get(random.nextInt(players.size())));
+            Goal goal = new Goal(match, players.get(random.nextInt(players.size())), null);
             list.add(goal);
         }
         return list;

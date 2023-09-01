@@ -1,8 +1,10 @@
 package com.game.football.service.imp;
 
 import com.game.football.entity.Goal;
+import com.game.football.entity.Goal;
 import com.game.football.entity.Match;
 import com.game.football.entity.Player;
+import com.game.football.error.NoTAcceptableException;
 import com.game.football.repository.GoalRepo;
 import com.game.football.service.GoalService;
 import com.game.football.service.MatchService;
@@ -20,7 +22,6 @@ public class GoalServiceImp extends BaseServiceImp<Goal, Long> implements GoalSe
     private PlayerService playerService;
     @Autowired
     private MatchService matchService;
-
     @Override
     public List<Goal> findByPlayerId(Long id) {
         Player player = playerService.findById(id);

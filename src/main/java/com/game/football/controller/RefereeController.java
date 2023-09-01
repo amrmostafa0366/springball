@@ -1,6 +1,7 @@
 package com.game.football.controller;
 
 import com.game.football.entity.Referee;
+import com.game.football.entity.Team;
 import com.game.football.service.RefereeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -39,7 +40,13 @@ public class RefereeController {
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-    @DeleteMapping("")
+    @PutMapping("/{id}")
+    public ResponseEntity<Void> update(@RequestBody Referee referee, @PathVariable Long id) {
+        refereeService.update(id, referee);
+        return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+
+    @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         refereeService.deleteById(id);
         return new ResponseEntity<>(HttpStatus.OK);

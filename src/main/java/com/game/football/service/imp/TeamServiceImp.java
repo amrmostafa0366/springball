@@ -1,9 +1,9 @@
 package com.game.football.service.imp;
 
 import com.game.football.entity.League;
-import com.game.football.entity.Referee;
 import com.game.football.entity.Team;
 import com.game.football.entity.dto.TeamWinnings;
+import com.game.football.error.NoTAcceptableException;
 import com.game.football.repository.TeamRepo;
 import com.game.football.service.LeagueService;
 import com.game.football.service.TeamService;
@@ -19,6 +19,17 @@ public class TeamServiceImp extends BaseServiceImp<Team, Long> implements TeamSe
     private TeamRepo teamRepo;
     @Autowired
     private LeagueService leagueService;
+
+    @Override
+    public void update(Long id, Team team) {
+        Team dbTeam = findById(id);
+        if (team != null && team.getName() != null && !team.getName().isBlank()) {
+            dbTeam.setName(team.getName());
+            save(dbTeam);
+        } else {
+            throw new NoTAcceptableException("Invalid Input");
+        }
+    }
 
     @Override
     public List<Team> findByLeagueId(Long id) {

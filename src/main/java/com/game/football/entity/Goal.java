@@ -1,6 +1,5 @@
 package com.game.football.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.Random;
@@ -19,16 +18,17 @@ public class Goal {
     @JoinColumn(name = "player_id")
     private Player player;
     @Column(name = "time")
-    private StringBuilder time = new StringBuilder();
+    private String time;
 
     public Goal() {
-        time.append(new Random().nextInt(90));
-        time.append(":");
-        time.append(new Random().nextInt(60));
+        time = new Random().nextInt(90) + ":" + new Random().nextInt(60);
     }
 
-    public Goal(Match match, Player player) {
+    public Goal(Match match, Player player, Long duration) {
         this();
+        if (duration != null) {
+            time = duration + ":" + new Random().nextInt(60);
+        }
         this.match = match;
         this.player = player;
     }
@@ -57,11 +57,11 @@ public class Goal {
         this.player = player;
     }
 
-    public StringBuilder getTime() {
+    public String getTime() {
         return time;
     }
 
-    public void setTime(StringBuilder time) {
+    public void setTime(String time) {
         this.time = time;
     }
 }

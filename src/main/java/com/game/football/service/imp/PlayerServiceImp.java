@@ -2,6 +2,7 @@ package com.game.football.service.imp;
 
 import com.game.football.entity.Player;
 import com.game.football.entity.Team;
+import com.game.football.error.NoTAcceptableException;
 import com.game.football.repository.PlayerRepo;
 import com.game.football.service.PlayerService;
 import com.game.football.service.TeamService;
@@ -21,5 +22,16 @@ public class PlayerServiceImp extends BaseServiceImp<Player, Long> implements Pl
     public List<Player> findByTeamId(Long id) {
         Team team = teamService.findById(id);
         return playerRepo.findByTeam(team);
+    }
+
+    @Override
+    public void update(Long id, Player player) {
+        Player dbPlayer = findById(id);
+        if (player != null && player.getName() != null && !player.getName().isBlank()) {
+            dbPlayer.setName(player.getName());
+            save(dbPlayer);
+        } else {
+            throw new NoTAcceptableException("Invalid Input");
+        }
     }
 }

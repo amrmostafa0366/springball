@@ -5,4 +5,5 @@ import org.springframework.stereotype.Service;
 
 @Service
 public interface LeagueService extends BaseService<League,Long> {
+    void update(Long id ,League league);
 }

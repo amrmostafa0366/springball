@@ -39,4 +39,10 @@ public class MatchController {
         Match result = matchService.play(leagueId);
         return new ResponseEntity<>(result, HttpStatus.CREATED);
     }
+
+    @PostMapping("/kick/{matchId}/{playerId}")
+    public ResponseEntity<Boolean> playerKick(@PathVariable("matchId") Long matchId, @PathVariable("playerId") Long playerId){
+        boolean result =  matchService.playerKick(matchId,playerId);
+        return new ResponseEntity<>(result,HttpStatus.OK);
+    }
 }

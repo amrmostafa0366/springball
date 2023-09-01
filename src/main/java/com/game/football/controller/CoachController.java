@@ -1,6 +1,7 @@
 package com.game.football.controller;
 
 import com.game.football.entity.Coach;
+import com.game.football.entity.Team;
 import com.game.football.service.CoachService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -25,7 +26,6 @@ public class CoachController {
     public ResponseEntity<List<Coach>> findByLeagueId(@PathVariable Long id) {
         List<Coach> result = coachService.findByLeagueId(id);
         return new ResponseEntity<>(result, HttpStatus.OK);
-
     }
 
     @GetMapping("/{id}")
@@ -40,7 +40,13 @@ public class CoachController {
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-    @DeleteMapping("")
+    @PutMapping("/{id}")
+    public ResponseEntity<Void> update(@RequestBody Coach coach, @PathVariable Long id) {
+        coachService.update(id, coach);
+        return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+
+    @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         coachService.deleteById(id);
         return new ResponseEntity<>(HttpStatus.OK);

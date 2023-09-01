@@ -33,7 +33,13 @@ public class LeagueController {
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-    @DeleteMapping("")
+    @PutMapping("/{id}")
+    public ResponseEntity<Void> update(@RequestBody League league, @PathVariable Long id) {
+        leagueService.update(id,league);
+        return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+
+    @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         leagueService.deleteById(id);
         return new ResponseEntity<>(HttpStatus.OK);
