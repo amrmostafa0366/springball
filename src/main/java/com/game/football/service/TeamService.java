@@ -12,7 +12,7 @@ public interface TeamService extends BaseService<Team, Long> {
 
     List<TeamWinnings> findRankingByLeagueId(Long id);
 
-    void update(Long id, Team team);
+    Team update(Long id, Team team);
 
-    void addToLeague(Long teamId,Long leagueId);
+    Team addToLeague(Long teamId,Long leagueId);
 }

@@ -15,22 +15,22 @@ public class LeagueManagerServiceImp extends BaseServiceImp<LeagueManager, Long>
     private LeagueService leagueService;
 
     @Override
-    public void update(Long id, LeagueManager leagueManager) {
+    public LeagueManager update(Long id, LeagueManager leagueManager) {
         LeagueManager dbLeagueManager = findById(id);
         if (leagueManager != null && leagueManager.getName() != null && !leagueManager.getName().isBlank()) {
             dbLeagueManager.setName(leagueManager.getName());
-            save(dbLeagueManager);
+            return save(dbLeagueManager);
         } else {
             throw new NoTAcceptableException("Invalid Input");
         }
     }
 
     @Override
-    public void addToLeague(Long leagueManagerId, Long leagueId) {
+    public LeagueManager addToLeague(Long leagueManagerId, Long leagueId) {
         LeagueManager leagueManager = findById(leagueManagerId);
         League league = leagueService.findById(leagueId);
         leagueManager.setLeague(league);
-        save(leagueManager);
+        return save(leagueManager);
     }
 
 }

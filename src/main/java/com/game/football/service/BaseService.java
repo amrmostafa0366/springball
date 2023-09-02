@@ -10,7 +10,7 @@ public interface BaseService<T, ID> {
 
     public T findById(ID id);
 
-    public void save(T t);
+    public T save(T t);
     public void deleteById(ID id);
 
     boolean existsById(ID id);

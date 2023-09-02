@@ -4,6 +4,7 @@ import com.game.football.entity.League;
 import com.game.football.entity.Team;
 import com.game.football.entity.dto.TeamWinnings;
 import com.game.football.service.TeamService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -42,15 +43,15 @@ public class TeamController {
     }
 
     @PostMapping("")
-    public ResponseEntity<Void> save(@RequestBody Team team) {
-        teamService.save(team);
-        return new ResponseEntity<>(HttpStatus.CREATED);
+    public ResponseEntity<Team> save(@Valid @RequestBody Team team) {
+        Team result = teamService.save(team);
+        return new ResponseEntity<>(result, HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Void> update(@PathVariable Long id, @RequestBody Team team) {
-        teamService.update(id, team);
-        return new ResponseEntity<>(HttpStatus.CREATED);
+    public ResponseEntity<Team> update(@PathVariable Long id, @Valid @RequestBody Team team) {
+        Team result = teamService.update(id, team);
+        return new ResponseEntity<>(result, HttpStatus.CREATED);
     }
 
     @DeleteMapping("/{id}")
@@ -58,9 +59,10 @@ public class TeamController {
         teamService.deleteById(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
     @PostMapping("/{teamId}/{leagueId}")
-    public ResponseEntity<Void> addToLeague(@PathVariable Long teamId,@PathVariable Long leagueId){
-        teamService.addToLeague(teamId,leagueId);
-        return new ResponseEntity<>(HttpStatus.CREATED);
+    public ResponseEntity<Team> addToLeague(@PathVariable Long teamId, @PathVariable Long leagueId) {
+        Team result = teamService.addToLeague(teamId, leagueId);
+        return new ResponseEntity<>(result, HttpStatus.CREATED);
     }
 }

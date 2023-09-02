@@ -29,8 +29,8 @@ public class BaseServiceImp<T, ID> implements BaseService<T, ID> {
     }
 
     @Override
-    public void save(T t) {
-        baseRepo.save(t);
+    public T save(T t) {
+        return baseRepo.save(t);
     }
 
     @Override

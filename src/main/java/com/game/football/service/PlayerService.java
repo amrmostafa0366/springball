@@ -11,7 +11,9 @@ public interface PlayerService extends BaseService<Player, Long> {
 
     List<Player> findByTeamId(Long id);
 
-    void update(Long id, Player player);
+    Player update(Long id, Player player);
 
-    void addToTeam(Long playerId, Long teamId);
+    Player addToTeam(Long playerId, Long teamId);
+
+    void updateAll();
 }

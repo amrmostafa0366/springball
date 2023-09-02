@@ -19,11 +19,11 @@ public class RefereeServiceImp extends BaseServiceImp<Referee, Long> implements 
     private LeagueService leagueService;
 
     @Override
-    public void update(Long id, Referee referee) {
+    public Referee update(Long id, Referee referee) {
         Referee dbReferee = findById(id);
         if (referee != null && referee.getName() != null && !referee.getName().isBlank()) {
             dbReferee.setName(referee.getName());
-            save(dbReferee);
+            return save(dbReferee);
         } else {
             throw new NoTAcceptableException("Invalid Input");
         }
@@ -36,11 +36,11 @@ public class RefereeServiceImp extends BaseServiceImp<Referee, Long> implements 
     }
 
     @Override
-    public void addToLeague(Long refereeId, Long leagueId) {
+    public Referee addToLeague(Long refereeId, Long leagueId) {
         Referee referee = findById(refereeId);
         League league = leagueService.findById(leagueId);
         referee.setLeague(league);
-        save(referee);
+       return save(referee);
     }
 
 }

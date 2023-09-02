@@ -21,22 +21,22 @@ public class TeamServiceImp extends BaseServiceImp<Team, Long> implements TeamSe
     private LeagueService leagueService;
 
     @Override
-    public void update(Long id, Team team) {
+    public Team update(Long id, Team team) {
         Team dbTeam = findById(id);
         if (team != null && team.getName() != null && !team.getName().isBlank()) {
             dbTeam.setName(team.getName());
-            save(dbTeam);
+            return save(dbTeam);
         } else {
             throw new NoTAcceptableException("Invalid Input");
         }
     }
 
     @Override
-    public void addToLeague(Long teamId, Long leagueId) {
+    public Team addToLeague(Long teamId, Long leagueId) {
         Team team = findById(teamId);
         League league = leagueService.findById(leagueId);
         team.setLeague(league);
-        save(team);
+        return save(team);
     }
 
     @Override

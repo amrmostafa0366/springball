@@ -1,12 +1,16 @@
 package com.game.football.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
 @MappedSuperclass
 public class Person {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Size(min = 3, max = 50)
+    @NotBlank
     private String name;
     @ManyToOne
     @JoinColumn(name = "league_id")

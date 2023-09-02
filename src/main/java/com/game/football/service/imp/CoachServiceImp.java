@@ -24,11 +24,11 @@ public class CoachServiceImp extends BaseServiceImp<Coach, Long> implements Coac
     private TeamService teamService;
 
     @Override
-    public void update(Long id, Coach coach) {
+    public Coach update(Long id, Coach coach) {
         Coach dbCoach = findById(id);
         if (coach != null && coach.getName() != null && !coach.getName().isBlank()) {
             dbCoach.setName(coach.getName());
-            save(dbCoach);
+            return save(dbCoach);
         } else {
             throw new NoTAcceptableException("Invalid Input");
         }
@@ -42,22 +42,20 @@ public class CoachServiceImp extends BaseServiceImp<Coach, Long> implements Coac
 
 
     @Override
-    public boolean addToLeague(Long coachId, Long leagueId) {
+    public Coach addToLeague(Long coachId, Long leagueId) {
         Coach coach = findById(coachId);
         League league = leagueService.findById(leagueId);
         coach.setLeague(league);
-        save(coach);
-        return true;
+        return save(coach);
     }
 
 
     @Override
-    public boolean addToTeam(Long coachId, Long teamId) {
+    public Coach addToTeam(Long coachId, Long teamId) {
         Coach coach = findById(coachId);
         Team team = teamService.findById(teamId);
         coach.setTeam(team);
-        save(coach);
-        return true;
+        return save(coach);
     }
 
 }

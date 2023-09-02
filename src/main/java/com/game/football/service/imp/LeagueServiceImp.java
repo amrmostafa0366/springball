@@ -9,11 +9,11 @@ import org.springframework.stereotype.Service;
 public class LeagueServiceImp extends BaseServiceImp<League, Long> implements LeagueService {
 
     @Override
-    public void update(Long id, League league) {
+    public League update(Long id, League league) {
         League dbLeague = findById(id);
         if (league != null && league.getName() != null && !league.getName().isBlank()) {
             dbLeague.setName(league.getName());
-            save(dbLeague);
+            return save(dbLeague);
         } else {
             throw new NoTAcceptableException("Invalid Input");
         }

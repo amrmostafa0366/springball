@@ -8,11 +8,11 @@ import java.util.List;
 
 @Service
 public interface CoachService extends BaseService<Coach, Long> {
-    void update(Long id, Coach coach);
+    Coach update(Long id, Coach coach);
 
     List<Coach> findByLeagueId(Long id);
 
-    boolean addToLeague(Long coachId, Long leagueId);
+    Coach addToLeague(Long coachId, Long leagueId);
 
-    boolean addToTeam(Long coachId, Long teamId);
+    Coach addToTeam(Long coachId, Long teamId);
 }

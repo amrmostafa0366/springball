@@ -1,6 +1,7 @@
 package com.game.football.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Size;
 
 
 @Entity
@@ -9,6 +10,7 @@ public class Team {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Size(min = 3, max = 50)
     private String name;
     @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinColumn(name = "league_id")

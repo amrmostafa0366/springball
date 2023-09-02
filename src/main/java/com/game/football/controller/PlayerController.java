@@ -4,6 +4,7 @@ import com.game.football.entity.Player;
 
 import com.game.football.entity.Team;
 import com.game.football.service.PlayerService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,11 +30,6 @@ public class PlayerController {
         return new ResponseEntity<>(result, HttpStatus.OK);
 
     }
-    @PostMapping("")
-    public ResponseEntity<Void> save(@RequestBody Player player) {
-        playerService.save(player);
-        return new ResponseEntity<>(HttpStatus.CREATED);
-    }
 
     @GetMapping("/{id}")
     public ResponseEntity<Player> findById(@PathVariable Long id) {
@@ -41,10 +37,16 @@ public class PlayerController {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
+    @PostMapping("")
+    public ResponseEntity<Player> save(@Valid @RequestBody Player player) {
+        Player result = playerService.save(player);
+        return new ResponseEntity<>(result, HttpStatus.CREATED);
+    }
+
     @PutMapping("/{id}")
-    public ResponseEntity<Void> update(@PathVariable Long id, @RequestBody Player player) {
-        playerService.update(id, player);
-        return new ResponseEntity<>(HttpStatus.CREATED);
+    public ResponseEntity<Player> update(@PathVariable Long id, @Valid @RequestBody Player player) {
+        Player result = playerService.update(id, player);
+        return new ResponseEntity<>(result, HttpStatus.CREATED);
     }
 
     @DeleteMapping("/{id}")
@@ -54,9 +56,13 @@ public class PlayerController {
     }
 
     @PostMapping("/{playerId}/{teamId}")
-    public ResponseEntity<Boolean> addToTeam(@PathVariable Long playerId,@PathVariable Long teamId){
-        playerService.addToTeam(playerId,teamId);
-        return new ResponseEntity<>(HttpStatus.CREATED);
+    public ResponseEntity<Player> addToTeam(@PathVariable Long playerId, @PathVariable Long teamId) {
+        Player result = playerService.addToTeam(playerId, teamId);
+        return new ResponseEntity<>(result, HttpStatus.CREATED);
     }
-
+//    @PutMapping("update-all")
+//    public ResponseEntity<Void> updateAllPlayers(){
+//        playerService.updateAll();
+//        return new ResponseEntity<>(HttpStatus.CREATED);
+//    }
 }

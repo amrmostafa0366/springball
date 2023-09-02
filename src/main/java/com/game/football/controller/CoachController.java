@@ -1,8 +1,8 @@
 package com.game.football.controller;
 
 import com.game.football.entity.Coach;
-import com.game.football.entity.Team;
 import com.game.football.service.CoachService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -35,15 +35,15 @@ public class CoachController {
     }
 
     @PostMapping("")
-    public ResponseEntity<Void> save(@RequestBody Coach coach) {
-        coachService.save(coach);
-        return new ResponseEntity<>(HttpStatus.CREATED);
+    public ResponseEntity<Coach> save(@Valid @RequestBody Coach coach) {
+        Coach result = coachService.save(coach);
+        return new ResponseEntity<>(result, HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Void> update(@RequestBody Coach coach, @PathVariable Long id) {
-        coachService.update(id, coach);
-        return new ResponseEntity<>(HttpStatus.CREATED);
+    public ResponseEntity<Coach> update(@PathVariable Long id, @Valid @RequestBody Coach coach) {
+        Coach result = coachService.update(id, coach);
+        return new ResponseEntity<>(result, HttpStatus.CREATED);
     }
 
     @DeleteMapping("/{id}")
@@ -53,20 +53,20 @@ public class CoachController {
     }
 
     @PostMapping("/add-to-team/{coachId}/{teamId}")
-    public ResponseEntity<Boolean> addToTeam(@PathVariable Long coachId, @PathVariable Long teamId) {
-        boolean result = coachService.addToTeam(coachId, teamId);
-        if (result) {
-            return new ResponseEntity<>(HttpStatus.CREATED);
+    public ResponseEntity<Coach> addToTeam(@PathVariable Long coachId, @PathVariable Long teamId) {
+        Coach result = coachService.addToTeam(coachId, teamId);
+        if (result != null) {
+            return new ResponseEntity<>(result, HttpStatus.CREATED);
         } else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 
     @PostMapping("/add-to-league/{coachId}/{leagueId}")
-    public ResponseEntity<Boolean> addToLeague(@PathVariable Long coachId, @PathVariable Long leagueId) {
-        boolean result = coachService.addToLeague(coachId, leagueId);
-        if (result) {
-            return new ResponseEntity<>(HttpStatus.CREATED);
+    public ResponseEntity<Coach> addToLeague(@PathVariable Long coachId, @PathVariable Long leagueId) {
+        Coach result = coachService.addToLeague(coachId, leagueId);
+        if (result != null) {
+            return new ResponseEntity<>(result, HttpStatus.CREATED);
         } else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }

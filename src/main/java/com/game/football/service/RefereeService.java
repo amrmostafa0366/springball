@@ -7,9 +7,9 @@ import java.util.List;
 
 @Service
 public interface RefereeService extends BaseService<Referee, Long> {
-    void update(Long id, Referee referee);
+    Referee update(Long id, Referee referee);
 
     List<Referee> findByLeagueId(Long id);
 
-    void addToLeague(Long refereeId, Long leagueId);
+    Referee addToLeague(Long refereeId, Long leagueId);
 }
