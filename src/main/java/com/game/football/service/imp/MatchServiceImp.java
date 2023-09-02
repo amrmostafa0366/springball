@@ -78,35 +78,43 @@ public class MatchServiceImp extends BaseServiceImp<Match, Long> implements Matc
     @Override
     public boolean playerKick(Long matchId, Long playerId) {
         Match match = findById(matchId);
-        Player player = playerService.findById(playerId);
-        boolean isGoal = kick();
-
         LocalDateTime currentTime = LocalDateTime.now();
         LocalDateTime matchStartTime = match.getDateTime();
         Duration elapsedDuration = Duration.between(matchStartTime, currentTime);
         long elapsedMinutes = elapsedDuration.toMinutes();
 
-        System.out.println("Elapsed Minutes: " + elapsedMinutes);
-        if (elapsedMinutes > 90) {
+        if (elapsedMinutes > 91) {
             return false;
         }
+        Player player = playerService.findById(playerId);
+        if (player.getTeam() == match.getTeam1() || player.getTeam() == match.getTeam2()) {
+            boolean isGoal = kick();
+            if (isGoal) {
+                if (player.getTeam() == match.getTeam1()) {
+                    match.setScore1(match.getScore1() + 1);
+                } else {
+                    match.setScore2(match.getScore2() + 1);
+                }
 
-        if (match.getTeam1() == player.getTeam()) {
-            if (isGoal) {
-                match.setScore1(match.getScore1() + 1);
+                updateWinner(match);
+
                 Goal goal = new Goal(match, player, elapsedMinutes);
                 goalService.save(goal);
             }
-        } else if (match.getTeam2() == player.getTeam()) {
-            if (isGoal) {
-                match.setScore2(match.getScore2() + 1);
-                Goal goal = new Goal(match, player, elapsedMinutes);
-                goalService.save(goal);
-            }
+            return isGoal;
         } else {
-            throw new NotFoundException("Player is not a member of either team");
+            throw new NotFoundException("Player Is Not a Member Of Either Team");
         }
-        return isGoal;
+    }
+
+    private void updateWinner(Match match) {
+        if (match.getScore1() > match.getScore2()) {
+            match.setWinner(match.getTeam1());
+        } else if (match.getScore1() < match.getScore2()) {
+            match.setWinner(match.getTeam2());
+        } else {
+            match.setWinner(null);
+        }
     }
 
     private boolean kick() {
