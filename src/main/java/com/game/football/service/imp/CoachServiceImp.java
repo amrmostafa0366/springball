@@ -51,6 +51,9 @@ public class CoachServiceImp extends BaseServiceImp<Coach, Long> implements Coac
     public Coach addToLeague(Long coachId, Long leagueId) {
         Coach coach = findById(coachId);
         League league = leagueService.findById(leagueId);
+        if (coach.getTeam() != null) {
+            coach.getTeam().setLeague(league);
+        }
         coach.setLeague(league);
         return save(coach);
     }
