@@ -3,6 +3,7 @@ package com.game.football.service.imp;
 import com.game.football.entity.Coach;
 import com.game.football.entity.League;
 import com.game.football.entity.Team;
+import com.game.football.error.ConflictException;
 import com.game.football.error.NoTAcceptableException;
 import com.game.football.repository.CoachRepo;
 import com.game.football.service.CoachService;
@@ -40,6 +41,11 @@ public class CoachServiceImp extends BaseServiceImp<Coach, Long> implements Coac
         return coachRepo.findByLeague(league);
     }
 
+    @Override
+    public Coach findByTeamId(Long id) {
+        Team team = teamService.findById(id);
+        return coachRepo.findByTeam(team);
+    }
 
     @Override
     public Coach addToLeague(Long coachId, Long leagueId) {
@@ -54,8 +60,17 @@ public class CoachServiceImp extends BaseServiceImp<Coach, Long> implements Coac
     public Coach addToTeam(Long coachId, Long teamId) {
         Coach coach = findById(coachId);
         Team team = teamService.findById(teamId);
+        if (findByTeam(team) != null) {
+            throw new ConflictException("This Team Already Have A Coach");
+        }
         coach.setTeam(team);
+        if (team.getLeague() != null) {
+            coach.setLeague(team.getLeague());
+        }
         return save(coach);
     }
 
+    private Coach findByTeam(Team team) {
+        return coachRepo.findByTeam(team);
+    }
 }

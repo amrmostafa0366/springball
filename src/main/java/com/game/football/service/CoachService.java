@@ -12,6 +12,8 @@ public interface CoachService extends BaseService<Coach, Long> {
 
     List<Coach> findByLeagueId(Long id);
 
+    Coach findByTeamId(Long id);
+
     Coach addToLeague(Long coachId, Long leagueId);
 
     Coach addToTeam(Long coachId, Long teamId);

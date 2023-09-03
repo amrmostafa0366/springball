@@ -34,9 +34,10 @@ public class BaseServiceImp<T, ID> implements BaseService<T, ID> {
     }
 
     @Override
-    public void deleteById(ID id) {
+    public boolean deleteById(ID id) {
         if (existsById(id)) {
             baseRepo.deleteById(id);
+            return true;
         } else {
             throw new NotFoundException("There's No Record With That ID");
         }

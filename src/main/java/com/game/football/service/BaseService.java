@@ -11,7 +11,7 @@ public interface BaseService<T, ID> {
     public T findById(ID id);
 
     public T save(T t);
-    public void deleteById(ID id);
+    public boolean deleteById(ID id);
 
     boolean existsById(ID id);
 }

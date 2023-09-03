@@ -10,4 +10,6 @@ import java.util.List;
 @Repository
 public interface CoachRepo extends BaseRepo<Coach, Long> {
     List<Coach> findByLeague(League league);
+
+    Coach findByTeam(Team team);
 }
